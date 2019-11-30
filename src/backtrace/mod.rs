@@ -62,6 +62,13 @@ without_backtrace! {
         pub fn is_empty(&self) -> bool {
             true
         }
+
+        /// Returns the underlying backtrace.
+        ///
+        /// Always returns `None` because backtrace support is disabled.
+        pub fn inner(&self) -> Option<&::backtrace::backtrace::Backtrace> {
+            None
+        }
     }
 
     impl Default for Backtrace {
@@ -132,6 +139,11 @@ with_backtrace! {
         /// Returns true if displaying this backtrace would be an empty string.
         pub fn is_empty(&self) -> bool {
             self.internal.is_none()
+        }
+
+        /// Returns the underlying backtrace.
+        pub fn inner(&self) -> Option<&::backtrace::backtrace::Backtrace> {
+            self.internal.as_backtrace()
         }
     }
 
